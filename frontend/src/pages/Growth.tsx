@@ -101,13 +101,13 @@ export default function Growth({ onLogout }: GrowthProps) {
 
       {/* Cards de Resumo */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/20">
+        <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/40">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm mb-1">Total de Membros</p>
               <p className="text-3xl font-bold text-blue-600">{latestData?.total || 0}</p>
             </div>
-            <div className="p-3 bg-blue-100 rounded-xl">
+            <div className="p-3 bg-blue-100 rounded-xl shadow-lg">
               <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
@@ -115,13 +115,13 @@ export default function Growth({ onLogout }: GrowthProps) {
           </div>
         </div>
 
-        <div className="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/20">
+        <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/40">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm mb-1">Membros Ativos</p>
               <p className="text-3xl font-bold text-green-600">{latestData?.active || 0}</p>
             </div>
-            <div className="p-3 bg-green-100 rounded-xl">
+            <div className="p-3 bg-green-100 rounded-xl shadow-lg">
               <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -129,13 +129,13 @@ export default function Growth({ onLogout }: GrowthProps) {
           </div>
         </div>
 
-        <div className="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/20">
+        <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/40">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm mb-1">Novos este Mês</p>
               <p className="text-3xl font-bold text-purple-600">{latestData?.new || 0}</p>
             </div>
-            <div className="p-3 bg-purple-100 rounded-xl">
+            <div className="p-3 bg-purple-100 rounded-xl shadow-lg">
               <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
               </svg>
@@ -143,7 +143,7 @@ export default function Growth({ onLogout }: GrowthProps) {
           </div>
         </div>
 
-        <div className="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/20">
+        <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/40">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm mb-1">Taxa de Crescimento</p>
@@ -151,7 +151,7 @@ export default function Growth({ onLogout }: GrowthProps) {
                 {growthRate}%
               </p>
             </div>
-            <div className={`p-3 rounded-xl ${parseFloat(growthRate) >= 0 ? 'bg-green-100' : 'bg-red-100'}`}>
+            <div className={`p-3 rounded-xl shadow-lg ${parseFloat(growthRate) >= 0 ? 'bg-green-100' : 'bg-red-100'}`}>
               <svg className={`w-6 h-6 ${parseFloat(growthRate) >= 0 ? 'text-green-600' : 'text-red-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
@@ -161,7 +161,7 @@ export default function Growth({ onLogout }: GrowthProps) {
       </div>
 
       {/* Gráfico de Linha - Crescimento Geral */}
-      <div className="bg-white/60 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/20 mb-8">
+      <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/40 mb-8">
         <h2 className="text-xl font-bold text-gray-800 mb-6">Evolução de Membros Ativos</h2>
         
         <div className="relative" style={{ height: chartHeight + 60 }}>
@@ -222,7 +222,7 @@ export default function Growth({ onLogout }: GrowthProps) {
       </div>
 
       {/* Gráfico de Barras - Por Departamento */}
-      <div className="bg-white/60 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/20">
+      <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/40">
         <h2 className="text-xl font-bold text-gray-800 mb-6">Membros Ativos por Departamento</h2>
         
         <div className="space-y-6">

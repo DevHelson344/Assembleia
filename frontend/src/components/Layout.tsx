@@ -83,13 +83,26 @@ export default function Layout({ children }: LayoutProps) {
   ];
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="flex h-screen relative overflow-hidden">
+      {/* Background Image com Gradiente */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/ad.jpg" 
+          alt="Background" 
+          className="w-full h-full object-cover"
+        />
+        {/* Gradiente overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-indigo-900/60 to-purple-900/70"></div>
+        {/* Gradiente adicional para profundidade */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+      </div>
+
       {/* Sidebar */}
-      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white/80 backdrop-blur-xl border-r border-white/20 transition-all duration-300 flex flex-col shadow-xl`}>
+      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white/90 backdrop-blur-xl border-r border-white/30 transition-all duration-300 flex flex-col shadow-2xl relative z-10`}>
         {/* Logo */}
-        <div className="p-6 border-b border-white/20">
+        <div className="p-6 border-b border-white/30">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
+            <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-xl">
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
@@ -97,7 +110,7 @@ export default function Layout({ children }: LayoutProps) {
             {sidebarOpen && (
               <div>
                 <h1 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{churchName}</h1>
-                <p className="text-xs text-gray-500">{getRoleName()}</p>
+                <p className="text-xs text-gray-600">{getRoleName()}</p>
               </div>
             )}
           </div>
@@ -125,16 +138,16 @@ export default function Layout({ children }: LayoutProps) {
         </nav>
 
         {/* User & Logout */}
-        <div className="p-4 border-t border-white/20">
+        <div className="p-4 border-t border-white/30">
           {sidebarOpen && (
-            <div className="mb-3 px-4 py-3 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl border border-white/20">
+            <div className="mb-3 px-4 py-3 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl border border-white/30 shadow-sm">
               <p className="text-sm font-semibold text-gray-800">{username}</p>
-              <p className="text-xs text-gray-500">{getRoleName()}</p>
+              <p className="text-xs text-gray-600">{getRoleName()}</p>
             </div>
           )}
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50/80 rounded-xl transition-colors backdrop-blur-sm"
+            className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50/90 rounded-xl transition-colors backdrop-blur-sm shadow-sm"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -146,7 +159,7 @@ export default function Layout({ children }: LayoutProps) {
         {/* Toggle Button */}
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="absolute top-6 -right-3 bg-white border border-gray-200 rounded-full p-1 hover:bg-gray-50"
+          className="absolute top-6 -right-3 bg-white/95 border border-gray-200 rounded-full p-1 hover:bg-gray-50 shadow-lg z-20"
         >
           <svg className={`w-4 h-4 text-gray-600 transition-transform ${!sidebarOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -155,7 +168,7 @@ export default function Layout({ children }: LayoutProps) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 overflow-auto relative z-10">
         <div className="p-8">
           {children}
         </div>

@@ -164,7 +164,7 @@ export default function Financial() {
       </div>
 
       {showForm && (
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
+        <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/40 mb-6">
           <h2 className="text-2xl font-bold mb-4">Nova Transação</h2>
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4">
@@ -231,7 +231,7 @@ export default function Financial() {
         </div>
       )}
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/40 overflow-hidden">
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
