@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "framework": null,
   "builds": [
     {
       "src": "frontend/package.json",
@@ -25,6 +26,5 @@
       "src": "/(.*)",
       "dest": "/frontend/dist/index.html"
     }
-  ],
-  "installCommand": "npm install && cd frontend && npm install"
+  ]
 }

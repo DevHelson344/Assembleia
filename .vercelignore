@@ -6,3 +6,8 @@ node_modules
 .DS_Store
 backend/node_modules
 frontend/node_modules
+backend/src
+backend/scripts
+backend/*.js
+backend/*.ts
+backend/tsconfig.json
