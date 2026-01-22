@@ -1,5 +1,5 @@
 #!/bin/bash
 cd frontend
-npm install
-npx vite build
+npm ci
+npm run build
 cd ..
