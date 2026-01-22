@@ -6,6 +6,7 @@
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
     "setup-db": "tsx scripts/setup-db.ts",
+    "create-church": "tsx scripts/create-church.ts",
     "create-admin": "tsx scripts/create-admin.ts"
   },
   "dependencies": {
