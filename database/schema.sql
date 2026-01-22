@@ -1,11 +1,21 @@
 -- Schema para Sistema de Gestão de Igrejas
 
+-- Igrejas (multi-tenant)
+CREATE TABLE churches (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  address TEXT,
+  phone VARCHAR(20),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Usuários do sistema
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(50) UNIQUE NOT NULL,
   password_hash VARCHAR(255) NOT NULL,
-  role VARCHAR(20) NOT NULL CHECK (role IN ('pastor', 'tesoureiro', 'secretario')),
+  role VARCHAR(20) NOT NULL CHECK (role IN ('admin', 'pastor', 'tesoureiro', 'secretario')),
+  church_id INTEGER REFERENCES churches(id) ON DELETE CASCADE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -17,6 +27,7 @@ CREATE TABLE members (
   baptism_date DATE,
   status VARCHAR(20) NOT NULL CHECK (status IN ('ativo', 'afastado', 'visitante')),
   department VARCHAR(20) CHECK (department IN ('criancas', 'jovens', 'senhoras', 'obreiros', 'homens')),
+  church_id INTEGER REFERENCES churches(id) ON DELETE CASCADE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -39,7 +50,8 @@ CREATE TABLE monthly_cash (
   is_closed BOOLEAN DEFAULT FALSE,
   closed_at TIMESTAMP,
   closed_by INTEGER REFERENCES users(id),
-  UNIQUE(month, year)
+  church_id INTEGER REFERENCES churches(id) ON DELETE CASCADE,
+  UNIQUE(month, year, church_id)
 );
 
 -- Transações financeiras
@@ -61,6 +73,7 @@ CREATE TABLE events (
   name VARCHAR(100) NOT NULL,
   type VARCHAR(30) NOT NULL,
   event_date DATE NOT NULL,
+  church_id INTEGER REFERENCES churches(id) ON DELETE CASCADE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -74,8 +87,12 @@ CREATE TABLE event_attendance (
 );
 
 -- Índices para performance
+CREATE INDEX idx_users_church ON users(church_id);
+CREATE INDEX idx_members_church ON members(church_id);
 CREATE INDEX idx_members_status ON members(status);
 CREATE INDEX idx_members_department ON members(department);
+CREATE INDEX idx_monthly_cash_church ON monthly_cash(church_id);
 CREATE INDEX idx_transactions_date ON transactions(transaction_date);
 CREATE INDEX idx_transactions_monthly ON transactions(monthly_cash_id);
+CREATE INDEX idx_events_church ON events(church_id);
 CREATE INDEX idx_events_date ON events(event_date);

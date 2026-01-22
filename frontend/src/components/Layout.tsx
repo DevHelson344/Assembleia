@@ -10,16 +10,19 @@ export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
   const role = localStorage.getItem('role');
   const username = localStorage.getItem('username') || 'Usuário';
+  const churchName = localStorage.getItem('church_name') || 'Sistema Igreja';
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
+    localStorage.removeItem('church_name');
     navigate('/login');
   };
 
   const getRoleName = () => {
+    if (role === 'admin') return 'Administrador';
     if (role === 'pastor') return 'Pastor';
     if (role === 'tesoureiro') return 'Tesoureiro';
     if (role === 'secretario') return 'Secretário';
@@ -70,20 +73,20 @@ export default function Layout({ children }: LayoutProps) {
   ];
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="flex h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Sidebar */}
-      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white border-r border-gray-200 transition-all duration-300 flex flex-col shadow-sm`}>
+      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white/80 backdrop-blur-xl border-r border-white/20 transition-all duration-300 flex flex-col shadow-xl`}>
         {/* Logo */}
-        <div className="p-6 border-b border-gray-100">
+        <div className="p-6 border-b border-white/20">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-sm">
+            <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </div>
             {sidebarOpen && (
               <div>
-                <h1 className="text-lg font-bold text-gray-800">Sistema Igreja</h1>
+                <h1 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{churchName}</h1>
                 <p className="text-xs text-gray-500">{getRoleName()}</p>
               </div>
             )}
@@ -112,16 +115,16 @@ export default function Layout({ children }: LayoutProps) {
         </nav>
 
         {/* User & Logout */}
-        <div className="p-4 border-t border-gray-100">
+        <div className="p-4 border-t border-white/20">
           {sidebarOpen && (
-            <div className="mb-3 px-4 py-3 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
+            <div className="mb-3 px-4 py-3 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl border border-white/20">
               <p className="text-sm font-semibold text-gray-800">{username}</p>
               <p className="text-xs text-gray-500">{getRoleName()}</p>
             </div>
           )}
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50/80 rounded-xl transition-colors backdrop-blur-sm"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

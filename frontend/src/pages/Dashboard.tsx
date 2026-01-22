@@ -227,44 +227,44 @@ export default function Dashboard() {
 
       {/* Cards de Estatísticas */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl shadow-lg text-white">
+        <div className="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/20">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-blue-100 text-sm mb-1">Total de Membros</p>
-              <p className="text-4xl font-bold">{stats.totalMembers}</p>
+              <p className="text-gray-600 text-sm mb-1">Total de Membros</p>
+              <p className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">{stats.totalMembers}</p>
             </div>
-            <div className="p-3 bg-white/20 rounded-lg backdrop-blur-sm">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="p-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-xl shadow-lg text-white">
+        <div className="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/20">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-green-100 text-sm mb-1">Membros Ativos</p>
-              <p className="text-4xl font-bold">{stats.activeMembers}</p>
+              <p className="text-gray-600 text-sm mb-1">Membros Ativos</p>
+              <p className="text-4xl font-bold bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">{stats.activeMembers}</p>
             </div>
-            <div className="p-3 bg-white/20 rounded-lg backdrop-blur-sm">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="p-4 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-6 rounded-xl shadow-lg text-white">
+        <div className="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/20">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-purple-100 text-sm mb-1">Taxa de Atividade</p>
-              <p className="text-4xl font-bold">
+              <p className="text-gray-600 text-sm mb-1">Taxa de Atividade</p>
+              <p className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
                 {stats.totalMembers > 0 ? Math.round((stats.activeMembers / stats.totalMembers) * 100) : 0}%
               </p>
             </div>
-            <div className="p-3 bg-white/20 rounded-lg backdrop-blur-sm">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="p-4 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-lg">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
             </div>
@@ -274,7 +274,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Gráfico de Pizza - Departamentos */}
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+        <div className="bg-white/60 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/20">
           <h2 className="text-lg font-bold text-gray-800 mb-6">Departamentos</h2>
           
           {Object.keys(stats.membersByDepartment).length > 0 ? (
@@ -291,7 +291,7 @@ export default function Dashboard() {
         </div>
 
         {/* Gráfico de Pizza - Status */}
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+        <div className="bg-white/60 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/20">
           <h2 className="text-lg font-bold text-gray-800 mb-6">Situação</h2>
           
           {Object.keys(stats.membersByStatus).length > 0 ? (

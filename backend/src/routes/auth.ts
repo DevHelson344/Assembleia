@@ -9,7 +9,10 @@ authRouter.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    const result = await pool.query(
+      'SELECT u.*, c.name as church_name FROM users u LEFT JOIN churches c ON u.church_id = c.id WHERE u.username = $1',
+      [username]
+    );
     
     if (result.rows.length === 0) {
       return res.status(401).json({ error: 'Usuário ou senha inválidos' });
@@ -23,12 +26,18 @@ authRouter.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, role: user.role },
+      { id: user.id, role: user.role, church_id: user.church_id },
       process.env.JWT_SECRET!,
       { expiresIn: '8h' }
     );
 
-    res.json({ token, role: user.role, username: user.username });
+    res.json({ 
+      token, 
+      role: user.role, 
+      username: user.username, 
+      church_id: user.church_id,
+      church_name: user.church_name || 'Sistema'
+    });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Erro no servidor' });
