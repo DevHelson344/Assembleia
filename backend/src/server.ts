@@ -20,6 +20,17 @@ app.use('/api/members', membersRouter);
 app.use('/api/financial', financialRouter);
 app.use('/api/reports', reportsRouter);
 
-app.listen(PORT, () => {
-  console.log(`✓ Server rodando na porta ${PORT}`);
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// Para desenvolvimento local
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`✓ Server rodando na porta ${PORT}`);
+  });
+}
+
+// Para Vercel
+export default app;
