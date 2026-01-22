@@ -1,12 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
-import { authRouter } from '../backend/src/routes/auth';
-import { membersRouter } from '../backend/src/routes/members';
-import { financialRouter } from '../backend/src/routes/financial';
-import { reportsRouter } from '../backend/src/routes/reports';
-
-dotenv.config();
+import { authRouter, membersRouter, financialRouter, reportsRouter } from './routes';
 
 const app = express();
 
