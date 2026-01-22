@@ -1,0 +1,4 @@
+# Deploy Automático Ativado
+
+Teste de deploy automático no Vercel.
+Data: 2026-01-22
