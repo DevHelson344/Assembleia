@@ -145,9 +145,8 @@ export default function Dashboard() {
 
   const loadStats = async () => {
     try {
-      const token = localStorage.getItem('token');
       const response = await axios.get('/api/members', {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       });
       
       const members = response.data;

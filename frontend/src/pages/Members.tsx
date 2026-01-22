@@ -5,8 +5,6 @@ import Layout from '../components/Layout';
 interface Member {
   id: number;
   name: string;
-  family: string;
-  baptism_date: string;
   status: string;
   department: string;
 }
@@ -20,8 +18,6 @@ export default function Members() {
   const [filterDepartment, setFilterDepartment] = useState('todos');
   const [formData, setFormData] = useState({
     name: '',
-    family: '',
-    baptism_date: '',
     status: 'ativo',
     department: ''
   });
@@ -32,9 +28,8 @@ export default function Members() {
 
   const loadMembers = async () => {
     try {
-      const token = localStorage.getItem('token');
       const response = await axios.get('/api/members', {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       });
       setMembers(response.data);
     } catch (error) {
@@ -45,17 +40,15 @@ export default function Members() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      
       if (editingMember) {
         // Atualizar membro existente
         await axios.put(`/api/members/${editingMember.id}`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
+          withCredentials: true
         });
       } else {
         // Criar novo membro
         await axios.post('/api/members', formData, {
-          headers: { Authorization: `Bearer ${token}` }
+          withCredentials: true
         });
       }
       
@@ -72,8 +65,6 @@ export default function Members() {
     setEditingMember(member);
     setFormData({
       name: member.name,
-      family: member.family || '',
-      baptism_date: member.baptism_date || '',
       status: member.status,
       department: member.department || ''
     });
@@ -85,12 +76,11 @@ export default function Members() {
   const handleCancelEdit = () => {
     setShowForm(false);
     setEditingMember(null);
-    setFormData({ name: '', family: '', baptism_date: '', status: 'ativo', department: '' });
+    setFormData({ name: '', status: 'ativo', department: '' });
   };
 
   const filteredMembers = members.filter(member => {
-    const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         member.family?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'todos' || member.status === filterStatus;
     const matchesDepartment = filterDepartment === 'todos' || member.department === filterDepartment;
     return matchesSearch && matchesStatus && matchesDepartment;
@@ -134,7 +124,7 @@ export default function Members() {
           <div className="flex-1">
             <input
               type="text"
-              placeholder="Buscar por nome ou família..."
+              placeholder="Buscar por nome..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -191,24 +181,6 @@ export default function Members() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Família</label>
-                <input
-                  type="text"
-                  value={formData.family}
-                  onChange={(e) => setFormData({ ...formData, family: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Data de Batismo</label>
-                <input
-                  type="date"
-                  value={formData.baptism_date}
-                  onChange={(e) => setFormData({ ...formData, baptism_date: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Departamento</label>
                 <select
                   value={formData.department}
@@ -261,9 +233,7 @@ export default function Members() {
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nome</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Família</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Departamento</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Batismo</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Situação</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Ações</th>
               </tr>
@@ -271,7 +241,7 @@ export default function Members() {
             <tbody className="divide-y divide-gray-200">
               {filteredMembers.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                  <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
                     Nenhum membro encontrado
                   </td>
                 </tr>
@@ -279,7 +249,6 @@ export default function Members() {
                 filteredMembers.map((member) => (
                   <tr key={member.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 text-gray-800">{member.name}</td>
-                    <td className="px-6 py-4 text-gray-600">{member.family || '-'}</td>
                     <td className="px-6 py-4">
                       {member.department ? (
                         <span className={`px-3 py-1 rounded-full text-sm font-medium ${departmentColors[member.department as keyof typeof departmentColors]}`}>
@@ -288,9 +257,6 @@ export default function Members() {
                       ) : (
                         <span className="text-gray-400">-</span>
                       )}
-                    </td>
-                    <td className="px-6 py-4 text-gray-600">
-                      {member.baptism_date ? new Date(member.baptism_date).toLocaleDateString('pt-BR') : '-'}
                     </td>
                     <td className="px-6 py-4">
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[member.status as keyof typeof statusColors]}`}>

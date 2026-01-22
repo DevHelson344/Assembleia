@@ -34,8 +34,15 @@ authRouter.post('/login', async (req, res) => {
       { expiresIn: '8h' }
     );
 
+    // Define o token em um HttpOnly cookie (mais seguro)
+    res.cookie('auth_token', token, {
+      httpOnly: true, // Não acessível via JavaScript
+      secure: process.env.NODE_ENV === 'production', // HTTPS apenas em produção
+      sameSite: 'strict', // Proteção contra CSRF
+      maxAge: 8 * 60 * 60 * 1000 // 8 horas em milissegundos
+    });
+
     res.json({ 
-      token, 
       role: user.role, 
       username: user.username, 
       church_id: user.church_id,
@@ -44,6 +51,28 @@ authRouter.post('/login', async (req, res) => {
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Erro no servidor' });
+  }
+});
+
+authRouter.post('/logout', (req, res) => {
+  res.clearCookie('auth_token');
+  res.json({ message: 'Logout realizado com sucesso' });
+});
+
+authRouter.get('/me', authenticate, async (req: AuthRequest, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT u.id, u.username, u.role, u.church_id, c.name as church_name FROM users u LEFT JOIN churches c ON u.church_id = c.id WHERE u.id = $1',
+      [req.user!.id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar dados do usuário' });
   }
 });
 
@@ -68,12 +97,12 @@ membersRouter.get('/', async (req: AuthRequest, res) => {
 });
 
 membersRouter.post('/', authorize('pastor', 'secretario'), async (req: AuthRequest, res) => {
-  const { name, family, baptism_date, status, department } = req.body;
+  const { name, status, department } = req.body;
 
   try {
     const result = await pool.query(
-      'INSERT INTO members (name, family, baptism_date, status, department, church_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [name, family, baptism_date, status, department, req.user!.church_id]
+      'INSERT INTO members (name, status, department, church_id) VALUES ($1, $2, $3, $4) RETURNING *',
+      [name, status, department, req.user!.church_id]
     );
     res.status(201).json(result.rows[0]);
   } catch (error) {
@@ -83,16 +112,86 @@ membersRouter.post('/', authorize('pastor', 'secretario'), async (req: AuthReque
 
 membersRouter.put('/:id', authorize('pastor', 'secretario'), async (req: AuthRequest, res) => {
   const { id } = req.params;
-  const { name, family, baptism_date, status, department } = req.body;
+  const { name, status, department } = req.body;
 
   try {
     const result = await pool.query(
-      'UPDATE members SET name = $1, family = $2, baptism_date = $3, status = $4, department = $5, updated_at = CURRENT_TIMESTAMP WHERE id = $6 AND church_id = $7 RETURNING *',
-      [name, family, baptism_date, status, department, id, req.user!.church_id]
+      'UPDATE members SET name = $1, status = $2, department = $3, updated_at = CURRENT_TIMESTAMP WHERE id = $4 AND church_id = $5 RETURNING *',
+      [name, status, department, id, req.user!.church_id]
     );
     res.json(result.rows[0]);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao atualizar membro' });
+  }
+});
+
+// Rota para obter dados de crescimento
+membersRouter.get('/growth/:months', async (req: AuthRequest, res) => {
+  const { months } = req.params;
+  const monthsCount = parseInt(months) || 6;
+
+  try {
+    const query = req.user!.role === 'admin' 
+      ? 'SELECT * FROM members ORDER BY created_at'
+      : 'SELECT * FROM members WHERE church_id = $1 ORDER BY created_at';
+    
+    const params = req.user!.role === 'admin' ? [] : [req.user!.church_id];
+    const result = await pool.query(query, params);
+    const members = result.rows;
+
+    // Calcular crescimento dos últimos N meses
+    const now = new Date();
+    const growthData = [];
+
+    for (let i = monthsCount - 1; i >= 0; i--) {
+      const targetDate = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const month = targetDate.getMonth() + 1;
+      const year = targetDate.getFullYear();
+      const monthName = targetDate.toLocaleString('pt-BR', { month: 'short' });
+
+      // Membros até o final desse mês
+      const endOfMonth = new Date(year, month, 0);
+      const membersUntilMonth = members.filter(m => new Date(m.created_at) <= endOfMonth);
+      
+      // Membros ativos
+      const activeMembers = membersUntilMonth.filter(m => m.status === 'ativo').length;
+      
+      // Novos membros nesse mês
+      const startOfMonth = new Date(year, month - 1, 1);
+      const newMembers = members.filter(m => {
+        const createdAt = new Date(m.created_at);
+        return createdAt >= startOfMonth && createdAt <= endOfMonth;
+      }).length;
+
+      // Por departamento
+      const byDepartment: any = {
+        criancas: 0,
+        jovens: 0,
+        senhoras: 0,
+        obreiros: 0,
+        homens: 0
+      };
+
+      membersUntilMonth.forEach(m => {
+        if (m.status === 'ativo' && m.department) {
+          byDepartment[m.department] = (byDepartment[m.department] || 0) + 1;
+        }
+      });
+
+      growthData.push({
+        month: monthName,
+        year,
+        total: membersUntilMonth.length,
+        active: activeMembers,
+        new: newMembers,
+        departments: byDepartment
+      });
+    }
+
+    res.json(growthData);
+  } catch (error) {
+    console.error('Erro ao buscar crescimento:', error);
+    res.status(500).json({ error: 'Erro ao buscar dados de crescimento' });
   }
 });
 

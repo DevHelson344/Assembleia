@@ -51,6 +51,16 @@ export default function Layout({ children }: LayoutProps) {
       label: 'Membros'
     },
     {
+      show: true,
+      to: '/growth',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      ),
+      label: 'Crescimento'
+    },
+    {
       show: role === 'pastor' || role === 'tesoureiro',
       to: '/financial',
       icon: (

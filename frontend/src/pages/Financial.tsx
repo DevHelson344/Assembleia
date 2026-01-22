@@ -38,9 +38,8 @@ export default function Financial() {
 
   const loadFinancial = async () => {
     try {
-      const token = localStorage.getItem('token');
       const response = await axios.get(`/api/financial/monthly/${year}/${month}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       });
       setCash(response.data.cash);
       setTransactions(response.data.transactions);
@@ -52,12 +51,11 @@ export default function Financial() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
       await axios.post('/api/financial/transaction', {
         ...formData,
         monthly_cash_id: cash?.id
       }, {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       });
       setShowForm(false);
       setFormData({
@@ -77,11 +75,10 @@ export default function Financial() {
     if (!confirm('Fechar o caixa? Esta ação não pode ser desfeita.')) return;
     
     try {
-      const token = localStorage.getItem('token');
       await axios.post('/api/financial/close-month', {
         monthly_cash_id: cash?.id
       }, {
-        headers: { Authorization: `Bearer ${token}` }
+        withCredentials: true
       });
       loadFinancial();
     } catch (error) {

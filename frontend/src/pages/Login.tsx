@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 interface LoginProps {
-  onLogin: () => void;
+  onLogin: (userData: { role: string; username: string; church_name: string }) => void;
 }
 
 export default function Login({ onLogin }: LoginProps) {
@@ -17,12 +17,17 @@ export default function Login({ onLogin }: LoginProps) {
     setError('');
 
     try {
-      const response = await axios.post('/api/auth/login', { username, password });
-      localStorage.setItem('token', response.data.token);
+      const response = await axios.post('/api/auth/login', 
+        { username, password },
+        { withCredentials: true } // Importante para enviar/receber cookies
+      );
+      
+      // Salva apenas dados não sensíveis no localStorage
       localStorage.setItem('role', response.data.role);
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('church_name', response.data.church_name);
-      onLogin();
+      
+      onLogin(response.data);
       navigate('/');
     } catch (err) {
       setError('Usuário ou senha inválidos');

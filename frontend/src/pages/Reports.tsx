@@ -6,8 +6,9 @@ export default function Reports() {
   const [year, setYear] = useState(new Date().getFullYear());
 
   const downloadPDF = () => {
-    const token = localStorage.getItem('token');
-    window.open(`/api/reports/financial/${year}/${month}?token=${token}`, '_blank');
+    // Como o cookie é HttpOnly, não podemos acessá-lo via JavaScript
+    // O navegador enviará automaticamente o cookie na requisição
+    window.open(`/api/reports/financial/${year}/${month}`, '_blank');
   };
 
   const months = [
