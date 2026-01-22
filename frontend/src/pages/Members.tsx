@@ -164,7 +164,7 @@ export default function Members() {
         </div>
 
       {showForm && (
-        <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/40 mb-6">
+        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mb-6">
           <h2 className="text-xl font-bold text-gray-800 mb-6">
             {editingMember ? 'Editar Membro' : 'Novo Membro'}
           </h2>
@@ -227,7 +227,7 @@ export default function Members() {
         </div>
       )}
 
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/40 overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-200">

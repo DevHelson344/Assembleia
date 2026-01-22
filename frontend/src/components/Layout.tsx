@@ -83,22 +83,9 @@ export default function Layout({ children }: LayoutProps) {
   ];
 
   return (
-    <div className="flex h-screen relative overflow-hidden">
-      {/* Background Image com Gradiente */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="/ad.jpg" 
-          alt="Background" 
-          className="w-full h-full object-cover"
-        />
-        {/* Gradiente overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-indigo-900/60 to-purple-900/70"></div>
-        {/* Gradiente adicional para profundidade */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
-      </div>
-
+    <div className="flex h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Sidebar */}
-      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white/90 backdrop-blur-xl border-r border-white/30 transition-all duration-300 flex flex-col shadow-2xl relative z-10`}>
+      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white/90 backdrop-blur-xl border-r border-white/30 transition-all duration-300 flex flex-col shadow-2xl`}>
         {/* Logo */}
         <div className="p-6 border-b border-white/30">
           <div className="flex items-center gap-3">
@@ -159,7 +146,7 @@ export default function Layout({ children }: LayoutProps) {
         {/* Toggle Button */}
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="absolute top-6 -right-3 bg-white/95 border border-gray-200 rounded-full p-1 hover:bg-gray-50 shadow-lg z-20"
+          className="absolute top-6 -right-3 bg-white/95 border border-gray-200 rounded-full p-1 hover:bg-gray-50 shadow-lg"
         >
           <svg className={`w-4 h-4 text-gray-600 transition-transform ${!sidebarOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -168,7 +155,7 @@ export default function Layout({ children }: LayoutProps) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto relative z-10">
+      <main className="flex-1 overflow-auto">
         <div className="p-8">
           {children}
         </div>

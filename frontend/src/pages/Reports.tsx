@@ -24,7 +24,7 @@ export default function Reports() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white/95 backdrop-blur-md p-6 rounded-xl shadow-2xl border border-white/40">
+        <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-blue-100 rounded-lg">
               <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -35,21 +35,8 @@ export default function Login({ onLogin }: LoginProps) {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
-      {/* Background Image com Gradiente */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="/ad.jpg" 
-          alt="Background" 
-          className="w-full h-full object-cover"
-        />
-        {/* Gradiente overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-indigo-900/70 to-purple-900/80"></div>
-        {/* Gradiente adicional */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-      </div>
-
-      <div className="bg-white/95 backdrop-blur-xl p-10 rounded-2xl shadow-2xl w-full max-w-md relative z-10 border border-white/40">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="bg-white/95 backdrop-blur-xl p-10 rounded-2xl shadow-2xl w-full max-w-md border border-white/40">
         <div className="text-center mb-8">
           <div className="inline-block p-3 bg-blue-100 rounded-full mb-4">
             <svg className="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

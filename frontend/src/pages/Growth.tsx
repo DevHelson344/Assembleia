@@ -101,7 +101,7 @@ export default function Growth({ onLogout }: GrowthProps) {
 
       {/* Cards de Resumo */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/40">
+        <div className="bg-gradient-to-br from-white/95 to-blue-50/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-blue-100/50">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm mb-1">Total de Membros</p>
@@ -115,7 +115,7 @@ export default function Growth({ onLogout }: GrowthProps) {
           </div>
         </div>
 
-        <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/40">
+        <div className="bg-gradient-to-br from-white/95 to-green-50/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-green-100/50">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm mb-1">Membros Ativos</p>
@@ -129,7 +129,7 @@ export default function Growth({ onLogout }: GrowthProps) {
           </div>
         </div>
 
-        <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/40">
+        <div className="bg-gradient-to-br from-white/95 to-purple-50/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-purple-100/50">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm mb-1">Novos este Mês</p>
@@ -143,7 +143,7 @@ export default function Growth({ onLogout }: GrowthProps) {
           </div>
         </div>
 
-        <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/40">
+        <div className="bg-gradient-to-br from-white/95 to-indigo-50/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-indigo-100/50">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm mb-1">Taxa de Crescimento</p>
@@ -161,7 +161,7 @@ export default function Growth({ onLogout }: GrowthProps) {
       </div>
 
       {/* Gráfico de Linha - Crescimento Geral */}
-      <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/40 mb-8">
+      <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-gray-100 mb-8">
         <h2 className="text-xl font-bold text-gray-800 mb-6">Evolução de Membros Ativos</h2>
         
         <div className="relative" style={{ height: chartHeight + 60 }}>
@@ -222,7 +222,7 @@ export default function Growth({ onLogout }: GrowthProps) {
       </div>
 
       {/* Gráfico de Barras - Por Departamento */}
-      <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/40">
+      <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-gray-100">
         <h2 className="text-xl font-bold text-gray-800 mb-6">Membros Ativos por Departamento</h2>
         
         <div className="space-y-6">
