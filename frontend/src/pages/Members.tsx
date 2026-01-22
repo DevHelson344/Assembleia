@@ -9,7 +9,7 @@ interface Member {
   department: string;
 }
 
-export default function Members() {
+export default function Members({ onLogout }: { onLogout: () => void }) {
   const [members, setMembers] = useState<Member[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingMember, setEditingMember] = useState<Member | null>(null);
@@ -115,68 +115,70 @@ export default function Members() {
   };
 
   return (
-    <Layout>
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">Membros</h1>
+    <Layout onLogout={onLogout}>
+      <div className="mb-4 lg:mb-6">
+        <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">Membros</h1>
       </div>
         
-      <div className="flex flex-col md:flex-row gap-4 mb-6">
+      <div className="flex flex-col gap-3 mb-4 lg:mb-6">
           <div className="flex-1">
             <input
               type="text"
               placeholder="Buscar por nome..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 text-sm lg:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
-          <select
-            value={filterDepartment}
-            onChange={(e) => setFilterDepartment(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="todos">Todos Departamentos</option>
-            <option value="criancas">Crianças</option>
-            <option value="jovens">Jovens</option>
-            <option value="senhoras">Senhoras</option>
-            <option value="obreiros">Obreiros</option>
-            <option value="homens">Homens</option>
-          </select>
-          <select
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="todos">Todas Situações</option>
-            <option value="ativo">Ativos</option>
-            <option value="afastado">Afastados</option>
-            <option value="visitante">Visitantes</option>
-          </select>
+          <div className="grid grid-cols-2 gap-3">
+            <select
+              value={filterDepartment}
+              onChange={(e) => setFilterDepartment(e.target.value)}
+              className="px-3 py-2 text-sm lg:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="todos">Todos Departamentos</option>
+              <option value="criancas">Crianças</option>
+              <option value="jovens">Jovens</option>
+              <option value="senhoras">Senhoras</option>
+              <option value="obreiros">Obreiros</option>
+              <option value="homens">Homens</option>
+            </select>
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="px-3 py-2 text-sm lg:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="todos">Todas Situações</option>
+              <option value="ativo">Ativos</option>
+              <option value="afastado">Afastados</option>
+              <option value="visitante">Visitantes</option>
+            </select>
+          </div>
           <button
             onClick={() => {
               setEditingMember(null);
               setShowForm(!showForm);
             }}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap"
+            className="w-full px-6 py-2.5 text-sm lg:text-base bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
           >
             {showForm ? 'Cancelar' : '+ Novo Membro'}
           </button>
         </div>
 
       {showForm && (
-        <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mb-6">
-          <h2 className="text-xl font-bold text-gray-800 mb-6">
+        <div className="bg-white p-4 lg:p-8 rounded-2xl shadow-lg border border-gray-100 mb-4 lg:mb-6">
+          <h2 className="text-lg lg:text-xl font-bold text-gray-800 mb-4 lg:mb-6">
             {editingMember ? 'Editar Membro' : 'Novo Membro'}
           </h2>
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Nome Completo *</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 text-sm lg:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 />
               </div>
@@ -185,7 +187,7 @@ export default function Members() {
                 <select
                   value={formData.department}
                   onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 text-sm lg:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="">Selecione...</option>
                   <option value="criancas">Crianças</option>
@@ -200,7 +202,7 @@ export default function Members() {
                 <select
                   value={formData.status}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 text-sm lg:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="ativo">Ativo</option>
                   <option value="afastado">Afastado</option>
@@ -208,17 +210,17 @@ export default function Members() {
                 </select>
               </div>
             </div>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <button
                 type="submit"
-                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                className="flex-1 px-6 py-2.5 text-sm lg:text-base bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
               >
                 {editingMember ? 'Atualizar Membro' : 'Salvar Membro'}
               </button>
               <button
                 type="button"
                 onClick={handleCancelEdit}
-                className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                className="flex-1 px-6 py-2.5 text-sm lg:text-base bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
               >
                 Cancelar
               </button>
@@ -232,44 +234,44 @@ export default function Members() {
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nome</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Departamento</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Situação</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Ações</th>
+                <th className="px-3 lg:px-6 py-3 text-left text-xs lg:text-sm font-semibold text-gray-700">Nome</th>
+                <th className="px-3 lg:px-6 py-3 text-left text-xs lg:text-sm font-semibold text-gray-700 hidden sm:table-cell">Departamento</th>
+                <th className="px-3 lg:px-6 py-3 text-left text-xs lg:text-sm font-semibold text-gray-700">Situação</th>
+                <th className="px-3 lg:px-6 py-3 text-left text-xs lg:text-sm font-semibold text-gray-700">Ações</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {filteredMembers.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
+                  <td colSpan={4} className="px-3 lg:px-6 py-8 text-center text-sm text-gray-500">
                     Nenhum membro encontrado
                   </td>
                 </tr>
               ) : (
                 filteredMembers.map((member) => (
                   <tr key={member.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 text-gray-800">{member.name}</td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 lg:px-6 py-3 lg:py-4 text-sm lg:text-base text-gray-800">{member.name}</td>
+                    <td className="px-3 lg:px-6 py-3 lg:py-4 hidden sm:table-cell">
                       {member.department ? (
-                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${departmentColors[member.department as keyof typeof departmentColors]}`}>
+                        <span className={`px-2 lg:px-3 py-1 rounded-full text-xs lg:text-sm font-medium ${departmentColors[member.department as keyof typeof departmentColors]}`}>
                           {departmentLabels[member.department as keyof typeof departmentLabels]}
                         </span>
                       ) : (
-                        <span className="text-gray-400">-</span>
+                        <span className="text-gray-400 text-sm">-</span>
                       )}
                     </td>
-                    <td className="px-6 py-4">
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColors[member.status as keyof typeof statusColors]}`}>
+                    <td className="px-3 lg:px-6 py-3 lg:py-4">
+                      <span className={`px-2 lg:px-3 py-1 rounded-full text-xs lg:text-sm font-medium ${statusColors[member.status as keyof typeof statusColors]}`}>
                         {statusLabels[member.status as keyof typeof statusLabels]}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 lg:px-6 py-3 lg:py-4">
                       <button
                         onClick={() => handleEdit(member)}
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-1.5 lg:p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         title="Editar membro"
                       >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
                       </button>
@@ -282,7 +284,7 @@ export default function Members() {
         </div>
       </div>
 
-      <div className="mt-4 text-sm text-gray-600">
+      <div className="mt-4 text-xs lg:text-sm text-gray-600">
         Total: {filteredMembers.length} {filteredMembers.length === 1 ? 'membro' : 'membros'}
       </div>
     </Layout>

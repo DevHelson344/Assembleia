@@ -80,17 +80,17 @@ export default function Growth({ onLogout }: GrowthProps) {
   const chartHeight = 200;
 
   return (
-    <Layout>
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-4">
+    <Layout onLogout={onLogout}>
+      <div className="mb-6 lg:mb-8">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Crescimento da Igreja</h1>
-            <p className="text-gray-600 mt-1">Acompanhe a evolução dos membros</p>
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">Crescimento da Igreja</h1>
+            <p className="text-sm lg:text-base text-gray-600 mt-1">Acompanhe a evolução dos membros</p>
           </div>
           <select
             value={months}
             onChange={(e) => setMonths(Number(e.target.value))}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-4 py-2 text-sm lg:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value={3}>Últimos 3 meses</option>
             <option value={6}>Últimos 6 meses</option>
@@ -100,7 +100,7 @@ export default function Growth({ onLogout }: GrowthProps) {
       </div>
 
       {/* Cards de Resumo */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
         <div className="bg-gradient-to-br from-white/95 to-blue-50/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-blue-100/50">
           <div className="flex items-center justify-between">
             <div>
@@ -161,8 +161,8 @@ export default function Growth({ onLogout }: GrowthProps) {
       </div>
 
       {/* Gráfico de Linha - Crescimento Geral */}
-      <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-gray-100 mb-8">
-        <h2 className="text-xl font-bold text-gray-800 mb-6">Evolução de Membros Ativos</h2>
+      <div className="bg-white/95 backdrop-blur-md p-4 lg:p-8 rounded-2xl shadow-xl border border-gray-100 mb-6 lg:mb-8">
+        <h2 className="text-lg lg:text-xl font-bold text-gray-800 mb-4 lg:mb-6">Evolução de Membros Ativos</h2>
         
         <div className="relative" style={{ height: chartHeight + 60 }}>
           {/* Grid horizontal */}
@@ -222,8 +222,8 @@ export default function Growth({ onLogout }: GrowthProps) {
       </div>
 
       {/* Gráfico de Barras - Por Departamento */}
-      <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-gray-100">
-        <h2 className="text-xl font-bold text-gray-800 mb-6">Membros Ativos por Departamento</h2>
+      <div className="bg-white/95 backdrop-blur-md p-4 lg:p-8 rounded-2xl shadow-xl border border-gray-100">
+        <h2 className="text-lg lg:text-xl font-bold text-gray-800 mb-4 lg:mb-6">Membros Ativos por Departamento</h2>
         
         <div className="space-y-6">
           {Object.entries(departmentLabels).map(([key, label]) => {

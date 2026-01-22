@@ -129,7 +129,7 @@ function PieChart({ data }: PieChartProps) {
   );
 }
 
-export default function Dashboard() {
+export default function Dashboard({ onLogout }: { onLogout: () => void }) {
   const [stats, setStats] = useState<Stats>({
     totalMembers: 0,
     activeMembers: 0,
@@ -217,13 +217,13 @@ export default function Dashboard() {
   }
 
   return (
-    <Layout>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
+    <Layout onLogout={onLogout}>
+      <div className="mb-6 lg:mb-8">
+        <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">Dashboard</h1>
       </div>
 
       {/* Cards de Estatísticas */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
         <div className="bg-gradient-to-br from-white/95 to-blue-50/80 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-blue-100/50">
           <div className="flex items-center justify-between">
             <div>
@@ -269,7 +269,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
         {/* Gráfico de Pizza - Departamentos */}
         <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-gray-100">
           <h2 className="text-lg font-bold text-gray-800 mb-6">Departamentos</h2>

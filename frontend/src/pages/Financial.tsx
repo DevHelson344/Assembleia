@@ -18,7 +18,7 @@ interface MonthlyCash {
   is_closed: boolean;
 }
 
-export default function Financial() {
+export default function Financial({ onLogout }: { onLogout: () => void }) {
   const [cash, setCash] = useState<MonthlyCash | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [showForm, setShowForm] = useState(false);
@@ -95,10 +95,10 @@ export default function Financial() {
     .reduce((sum, t) => sum + parseFloat(t.amount), 0);
 
   return (
-    <Layout>
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-4">Financeiro</h1>
-        <div className="flex gap-4 items-center">
+    <Layout onLogout={onLogout}>
+      <div className="mb-4 lg:mb-6">
+        <h1 className="text-2xl lg:text-3xl font-bold mb-4">Financeiro</h1>
+        <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 items-start sm:items-center">
           <select
             value={month}
             onChange={(e) => setMonth(Number(e.target.value))}
@@ -129,7 +129,7 @@ export default function Financial() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 mb-4 lg:mb-6">
         <div className="bg-green-100 p-6 rounded-lg">
           <h3 className="text-lg text-gray-600">Entradas</h3>
           <p className="text-3xl font-bold text-green-700">R$ {totalEntradas.toFixed(2)}</p>

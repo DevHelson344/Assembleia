@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Layout from '../components/Layout';
 
-export default function Reports() {
+export default function Reports({ onLogout }: { onLogout: () => void }) {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
 
@@ -17,10 +17,10 @@ export default function Reports() {
   ];
 
   return (
-    <Layout>
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Relatórios</h1>
-        <p className="text-gray-600">Gere e exporte relatórios do sistema</p>
+    <Layout onLogout={onLogout}>
+      <div className="mb-4 lg:mb-6">
+        <h1 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-2">Relatórios</h1>
+        <p className="text-sm lg:text-base text-gray-600">Gere e exporte relatórios do sistema</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
