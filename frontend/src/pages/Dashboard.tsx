@@ -217,8 +217,6 @@ export default function Dashboard() {
     );
   }
 
-  const totalDepartments = Object.values(stats.membersByDepartment).reduce((a, b) => a + b, 0);
-
   return (
     <Layout>
       <div className="mb-8">
