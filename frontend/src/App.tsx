@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Members from './pages/Members';
@@ -68,12 +67,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Landing />} />
         <Route path="/login" element={
-          isAuthenticated ? <Navigate to="/dashboard" /> : <Login onLogin={handleLogin} />
+          isAuthenticated ? <Navigate to="/" /> : <Login onLogin={handleLogin} />
         } />
         <Route
-          path="/dashboard"
+          path="/"
           element={isAuthenticated ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/login" />}
         />
         <Route
